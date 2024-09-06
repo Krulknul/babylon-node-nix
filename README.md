@@ -3,6 +3,9 @@
 The new easiest way to spin up a node on the Radix Babylon network.
 
 ```nix
+### configuration.nix ###
+{ config, pkgs, ... }:
+
 {
   imports = [
     /home/krulk/nix/babylon-service.nix
@@ -31,5 +34,7 @@ The new easiest way to spin up a node on the Radix Babylon network.
       create_if_missing = true;
     };
   };
+
+  # Any other NixOS configurations...
 }
 ```
