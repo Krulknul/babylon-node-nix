@@ -5,6 +5,7 @@ The new easiest way to spin up a node on [RadixDLT](https://www.radixdlt.com)'s 
 * Bare metal deployment
 * Easy configuration
 * Fully declarative
+* No implicit dependencies
 
 ```nix
 ### configuration.nix ###
@@ -106,12 +107,12 @@ Clone this repository
 git clone git@github.com:NixOS/nixpkgs.git
 ```
 
-Import the `babylon-service.nix` in your `/etc/nixos/configuration.nix` by adding the following top-level attribute:
+Import the `babylon-service.nix` from the repository in your `/etc/nixos/configuration.nix` by adding the following top-level attribute:
 ```nix
 imports = [
-    /home/krulk/nix/babylon-service.nix
+    /path/to/repository/babylon-service.nix
     # Any other imports you may already have...
-  ];
+];
 ```
 
 Add some minimal configurations for the `babylon_node` service which has just been imported.
@@ -151,7 +152,7 @@ Your `configuration.nix` should now look something like this:
 
 {
   imports = [
-    path/to/repository/babylon-service.nix
+    /path/to/repository/babylon-service.nix
     # Your other imports...
   ];
 
@@ -216,14 +217,16 @@ Some required configurations however, are not possible to configure using that c
 
   # Configure the service.
   services.babylon_node.config = {
-    # Use ID of 1 for Mainnet
     network = {
+      # Use ID of 1 for Mainnet
       id = 1;
+      # Set the IP of the host to avoid having to ask another service
       host_ip = "your.ip.goes.here";
       p2p = {
         # Change the gossip ports here
         listen_port = 30000;
         broadcast_port = 30000;
+        # Add or remove some seed nodes
         seed_nodes = [
           "radix://node_rdx1qf2x63qx4jdaxj83kkw2yytehvvmu6r2xll5gcp6c9rancmrfsgfw0vnc65@babylon-mainnet-eu-west-1-node0.radixdlt.com"
           "radix://node_rdx1qgxn3eeldj33kd98ha6wkjgk4k77z6xm0dv7mwnrkefknjcqsvhuu4gc609@babylon-mainnet-ap-southeast-2-node0.radixdlt.com"
@@ -242,12 +245,12 @@ Some required configurations however, are not possible to configure using that c
     api = {
       # Why not bind the core api to port 3434
       core.port = 3434
-      # Or expose the system API
+      # Or expose the system API to the network
       system.bind_address = "0.0.0.0"
     };
     node.key = {
       path = "/home/babylon_node/keystore.ks";
-      create_if_missing = true;
+      create_if_missing = false;
     };
     run_with = {
       # Explicitly set the user for the service
