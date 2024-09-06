@@ -244,7 +244,7 @@ Some required configurations however, are not possible to configure using that c
     };
     api = {
       # Why not bind the core api to port 3434
-      core.port = 3434
+      core.port = 3434;
       # Or expose the system API to the network
       system.bind_address = "0.0.0.0"
     };
@@ -261,7 +261,7 @@ Some required configurations however, are not possible to configure using that c
       java_option_overrides = "-Xms12g -Xmx12g"
       # A file which contains environment variables to expose to the service.
       # One particularly important one if you're using a keystore with a password is RADIX_NODE_KEYSTORE_PASSWORD
-      environment_file = "/directory/with/secrets/environment"
+      environment_file = "/directory/with/secrets/environment";
       # The directory where log files are written
       working_directory = "/home/babylon_node";
     };
