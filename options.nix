@@ -192,10 +192,10 @@ in
                 default = "";
                 description = "The environment file that contains the environment variable RADIX_NODE_KEYSTORE_PASSWORD.";
               };
-                # I'm not sure whether it is possible to override the directory where log files
-                # are written, so it is not currently an option you can set.
-                # For that reason, it is important to set the working directory to a directory where the service has write permissions,
-                # else the service will not be able to write log files and it will fail to start.
+              # I'm not sure whether it is possible to override the directory where log files
+              # are written, so it is not currently an option you can set.
+              # For that reason, it is important to set the working directory to a directory where the service has write permissions,
+              # else the service will not be able to write log files and it will fail to start.
               working_directory = mkOption {
                 type = types.str;
                 default = "/home/babylon_node";
