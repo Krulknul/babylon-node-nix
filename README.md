@@ -63,9 +63,9 @@ NixOS is a Linux distribution that uses the Nix language for declaratively build
 
 ![Ansible? Nein danke](https://i.redd.it/pgqf5k0qvuu81.jpg)
 
-## Why Nix for babylon-node?
+## Why Nix for your Babylon node?
 
-While it's possible to run a babylon node in a docker container, some node runners prefer the performance of running without docker. Setting this up often comes down to having to manually set up a system by ssh-ing in and imperatively running commands. If we instead use NixOS, we can add the `babylon_node` service configuration to the `configuration.nix`, run `sudo nixos-rebuild switch` and it will simply start working.
+While it's possible to run a babylon node in a docker container, some node runners prefer the performance of running without docker. Setting this up often comes down to having to manually set up a system by ssh-ing in and imperatively running commands. If we instead use NixOS, we can add the `babylon_node` service configuration to the `configuration.nix`, run `sudo nixos-rebuild switch` and it will simply start working. In addition to easily being able to start and configure the Babylon node service, we can also configure all other things about our node deployment in `configuration.nix`, making it very simple to deploy our node on another machine with exactly the same firewall settings / executables / services / packages etc.
 
 Even if you're not interested in using NixOS to run your node, this project can still come in handy for you. It packages the Babylon node binaries in a reproducible manner, and with runtime dependencies baked in.
 Usually, to run the node software on Ubuntu or another linux distribution, you will have to roughly go through these steps (excluding most configuration):
