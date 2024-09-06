@@ -76,6 +76,7 @@ Usually, to run the node software on Ubuntu or another linux distribution, you w
 * Place the contents in a dedicated directory
 * Install the right version of Java
 * Prepare an environment variable to make sure the dynamic library is used when you run
+* Hope that your system has the right version of glibc
 * Add some additional Java options that are needed to run the node software
 * Run the executable
 
@@ -84,7 +85,7 @@ However, with the nix package from this repository:
 * `nix-build babylon-node.nix`, which produces the `result` directory as build output.
 * `./result/bin/babylon_node`
 
-No need to manually install Java - it's managed by Nix, and if you use Nix [flakes](https://zero-to-nix.com/concepts/flakes), the versions are pinned to make this package completely reproducible.
+No need to manually install Java - it's managed by Nix. It should also work across Linux distributions because even glibc is an explicit dependency to this build. And if you use Nix [flakes](https://zero-to-nix.com/concepts/flakes), the versions are pinned to make this package completely reproducible.
 
 Note that the above doesn't provide a working node setup just yet. You still have to configure the node which can be done by passing in the path to a configuration file using the `-config` command line option. On NixOS, this is all handled in `configuration.nix`
 
