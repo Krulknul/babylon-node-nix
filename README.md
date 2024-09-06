@@ -60,7 +60,7 @@ The Nix package manager uses the functional Nix programming language to achieve 
 ### NixOS
 NixOS is a Linux distribution that uses the Nix language for declaratively building an entire Linux system. Packages, firewall settings, users, directories and services can all be declared using the Nix language. This allows for completely reproducible deployments. Something promised by tools like Ansible, but actually delivered by NixOS.
 
-![Ansible? Nein danke](https://i.redd.it/pgqf5k0qvuu81.jpg | width=100)
+![Ansible? Nein danke](https://i.redd.it/pgqf5k0qvuu81.jpg|width=100)
 
 ## Why Nix for babylon-node?
 
