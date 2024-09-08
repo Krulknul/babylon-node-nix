@@ -46,7 +46,7 @@ in
       serviceConfig = {
         User = cfg.config.run_with.user;
         Group = cfg.config.run_with.group;
-        ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon_node.config";
+        ExecStart = "${babylon-node}/bin/babylon_node -config /etc/radixdlt/babylon_node.config";
         Restart = "always";
         WorkingDirectory = cfg.config.run_with.working_directory;
         EnvironmentFile = cfg.config.run_with.environment_file;
