@@ -69,12 +69,9 @@ stdenv.mkDerivation rec {
       --set LD_PRELOAD "$out/jni/libcorerust.${binary.libraryExtension}" \
       --set LD_LIBRARY_PATH "${pkgs.stdenv.cc.cc.lib}/lib:$LD_LIBRARY_PATH"
     mv $out/bin/core $out/bin/babylon_node
-    # Set the permissions to allow the binary to run
-    chmod +x $out/bin/babylon_node
 
     wrapProgram $out/bin/keygen \
       --set JAVA_HOME "${jdk}"
-    chmod +x $out/bin/keygen
   '';
 
   meta = with lib; {
