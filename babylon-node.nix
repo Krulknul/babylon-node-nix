@@ -21,7 +21,7 @@ let
     };
     "x86_64-linux" = {
       url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.2/babylon-node-rust-arch-linux-x86_64-release-v1.2.2.zip";
-      sha256 = "";
+      sha256 = "sha256-F8QcKjZFpfowMF/weGAXxg90+iT9Kr/YhoSImkZfSiQ=";
       libraryExtension = "so";
     };
     "aarch64-linux" = {
