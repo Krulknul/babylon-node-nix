@@ -12,7 +12,7 @@
         "aarch64-linux"
         "aarch64-darwin"
       ] (system: function nixpkgs.legacyPackages.${system});
-      pkgs = import nixpkgs { inherit system; };
+      pkgs = import nixpkgs {};
   in
     {
         packages = forAllSystems (pkgs: {
