@@ -105,7 +105,7 @@ If you already have an installation of NixOS, for example on a server or VPS, th
 Clone this repository
 
 ```bash
-git clone git@github.com:Krulknul/babylon-node-nix.git
+git clone https://github.com/Krulknul/babylon-node-nix.git
 ```
 
 Import the `babylon-service.nix` from the repository in your `/etc/nixos/configuration.nix` by adding the following top-level attribute:
