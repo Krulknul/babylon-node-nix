@@ -1,19 +1,16 @@
-{ nixpkgs }:
+{ pkgs }:
 
 {
   config,
-  pkgs,
   ...
 }:
-let newpkgs = import nixpkgs { system = pkgs.system; };
-in
 
-with newpkgs.lib;
+with pkgs.lib;
 let
-  options = import ./options.nix { lib = newpkgs.lib; };
+  options = import ./options.nix { lib = pkgs.lib; };
   cfg = config.services.babylon_node;
   boolToString = b: if b then "true" else "false";
-  cfgfile = newpkgs.writeText "babylon.config" ''
+  cfgfile = pkgs.writeText "babylon.config" ''
     network.id=${toString cfg.config.network.id}
     network.host_ip=${cfg.config.network.host_ip}
     network.p2p.seed_nodes=${concatStringsSep "," cfg.config.network.p2p.seed_nodes}
@@ -32,7 +29,7 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  babylon-node = import ./babylon-node.nix { inherit newpkgs; };
+  babylon-node = import ./babylon-node.nix { inherit pkgs; };
 
 in
 {
