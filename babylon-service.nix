@@ -1,5 +1,3 @@
-{babylon_node}:
-
 {
   config,
   lib,
@@ -32,7 +30,7 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  babylon-node = import ./babylon-node.nix { pkgs = nixpkgs; };
+  babylon-node = import ./babylon-node.nix { inherit pkgs; };
 
 in
 {
