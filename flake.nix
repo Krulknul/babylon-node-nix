@@ -3,7 +3,7 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
   };
-  outputs = { self, nixpkgs, nixos-shell }:
+  outputs = { self, nixpkgs }:
     {
       nixosModules.babylon_node = import ./module.nix;
     };
