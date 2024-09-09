@@ -3,6 +3,7 @@
 {
   config,
   pkgs,
+  ...
 }:
 let pkgs = import nixpkgs { system = pkgs.system; };
 in
