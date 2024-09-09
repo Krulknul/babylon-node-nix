@@ -15,7 +15,7 @@ let
   cfgfile = newPkgs.writeText "babylon.config" ''
     network.id=${toString cfg.config.network.id}
     network.host_ip=${cfg.config.network.host_ip}
-    network.p2p.seed_nodes=${concatStringsSep "," cfg.config.network.p2p.seed_nodes}
+    network.p2p.seed_nodes=${newPkgs.concatStringsSep "," cfg.config.network.p2p.seed_nodes}
     network.p2p.listen_port=${toString cfg.config.network.p2p.listen_port}
     network.p2p.broadcast_port=${toString cfg.config.network.p2p.broadcast_port}
     node.key.path=${cfg.config.node.key.path}
