@@ -13,10 +13,10 @@
         "aarch64-darwin"
       ] (system: function nixpkgs.legacyPackages.${system});
   in
-    {
+    rec {
         packages = forAllSystems (pkgs: {
-            default = pkgs.callPackage ./babylon-node.nix {inherit nixpkgs;};
+            default = pkgs.callPackage ./babylon-node.nix {pkgs = pkgs;};
         });
-        nixosModules.babylon_node = import ./babylon-service.nix;
+        nixosModules.babylon_node = import ./babylon-service.nix { babylon_node = packages${system}; };
     };
 }
