@@ -5,6 +5,6 @@
   };
   outputs = { self, nixpkgs, nixos-shell }:
     {
-      nixosModules.example-module = import ./module.nix;
+      nixosModules.babylon_node = import ./module.nix;
     };
 }
