@@ -15,7 +15,7 @@
   in
     {
         packages = forAllSystems (pkgs: {
-            default = pkgs.callPackage ./babylon-node.nix {inherit nixpkgs};
+            default = pkgs.callPackage ./babylon-node.nix {inherit nixpkgs;};
         });
         nixosModules.babylon_node = import ./babylon-service.nix;
     };
