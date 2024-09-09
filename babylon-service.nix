@@ -8,7 +8,6 @@
 
 let newPkgs = import nixpkgs {system = pkgs.system;};
 in
-with newPkgs.lib;
 let
   options = import ./options.nix { lib = newPkgs.lib; };
   cfg = config.services.babylon_node;
