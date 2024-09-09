@@ -5,10 +5,9 @@
   ...
 }:
 
-with pkgs.lib;
 
 let
-  options = import ./options.nix { inherit lib; };
+  options = import ./options.nix { lib = pkgs.lib; };
   cfg = config.services.babylon_node;
   boolToString = b: if b then "true" else "false";
   cfgfile = pkgs.writeText "babylon.config" ''
