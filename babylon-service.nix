@@ -1,9 +1,11 @@
-{ pkgs }:
+{ nixpkgs }:
 
 {
   config,
-  ...
+  pkgs,
 }:
+let pkgs = import nixpkgs { system = pkgs.system; };
+in
 
 with pkgs.lib;
 let
