@@ -5,6 +5,6 @@
   };
   outputs = { self, nixpkgs }:
     {
-      nixosModules.babylon_node = import ./module.nix;
+      nixosModules.babylon_node = import ./babylon-service.nix;
     };
 }
