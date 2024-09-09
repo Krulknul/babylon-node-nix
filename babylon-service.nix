@@ -5,7 +5,7 @@
   ...
 }:
 
-
+with pkgs.lib;
 let
   options = import ./options.nix { lib = pkgs.lib; };
   cfg = config.services.babylon_node;
