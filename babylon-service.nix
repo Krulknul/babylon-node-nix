@@ -6,7 +6,7 @@
   ...
 }:
 
-let newPkgs = import nixpkgs {pkgs.system};
+let newPkgs = import nixpkgs {system = pkgs.system;};
 in
 with newPkgs.lib;
 let
