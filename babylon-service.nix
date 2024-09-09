@@ -6,9 +6,9 @@
   ...
 }:
 
-let newPkgs = import nixpkgs {system = pkgs.system;};
-in
+
 let
+  newPkgs = import nixpkgs {system = pkgs.system;};
   options = import ./options.nix { lib = newPkgs.lib; };
   cfg = config.services.babylon_node;
   boolToString = b: if b then "true" else "false";
