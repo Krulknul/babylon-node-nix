@@ -8,7 +8,7 @@
 
 
 let
-  babylon-node = self.packages.${pkgs.system}.default;
+  # babylon-node = self.packages.${pkgs.system}.default;
   options = import ./options.nix { lib = pkgs.lib; };
   cfg = config.services.babylon_node;
   boolToString = b: if b then "true" else "false";
@@ -31,6 +31,7 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
+  babylon-node = import ./babylon-node.nix { inherit pkgs; };
 
 in
 {
