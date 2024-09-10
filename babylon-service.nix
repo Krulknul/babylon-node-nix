@@ -8,7 +8,7 @@
 }:
 with lib;
 let
-  # babylon-node = self.packages."aarch64-darwin".default;
+  babylon-node = self.packages."aarch64-darwin";
   # print = builtins.trace "babylon-node: ${babylon-node}" "";
   options = import ./options.nix { inherit lib; };
   cfg = config.services.babylon_node;
@@ -32,7 +32,7 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  babylon-node = import ./babylon-node.nix { inherit pkgs; };
+  # babylon-node = import ./babylon-node.nix { inherit pkgs; };
 
 in
 {
