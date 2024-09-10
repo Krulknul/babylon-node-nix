@@ -9,7 +9,7 @@
 with lib;
 let
   babylon-node = self.packages."aarch64-darwin";
-  # print = builtins.trace "babylon-node: ${babylon-node}" "";
+  print = builtins.trace "babylon-node: ${babylon-node}" "";
   options = import ./options.nix { inherit lib; };
   cfg = config.services.babylon_node;
   boolToString = b: if b then "true" else "false";
