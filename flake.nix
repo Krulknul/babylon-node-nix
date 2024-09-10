@@ -13,7 +13,7 @@
         "aarch64-darwin"
       ] (system: function nixpkgs.legacyPackages.${system});
       allPackages = forAllSystems (pkgs: {
-            default = pkgs.callPackage ./babylon-node.nix;
+            default = pkgs.callPackage ./babylon-node.nix {};
         });
   in
     {
