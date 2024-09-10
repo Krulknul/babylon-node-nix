@@ -7,7 +7,6 @@
   ...
 }:
 
-with lib;
 let
   # babylon-node = self.packages.${pkgs.system}.default;
   options = import ./options.nix { inherit lib; };
