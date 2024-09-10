@@ -39,7 +39,7 @@ in
 {
   options.services.babylon_node = options;
 
-  config = lib.mkIf cfg.enable {
+  config = pkgsFixed.mkIf cfg.enable {
     environment.etc."radixdlt/babylon_node.config".source = cfgfile;
 
     systemd.services.babylon_node = {
