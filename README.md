@@ -214,3 +214,13 @@ For this project, I am trying out the following versioning scheme:
 `babylon-node-version+revision`
 
 The `babylon-node-version` part specifies which version of the Babylon node software is used/compatible, and the revision is for any fixes or upgrades.
+
+## Upgrading your node
+
+To upgrade your node to a new version, you can wait for a new version of this repo to be released and when it is available, follow these steps:
+
+1. Update the `tag` in the `babylon-node-nix.url` input in the `flake.nix` that you use for your NixOS configuration.
+2. Run `nix flake update /etc/nixos` (or another path if your flake is not in this dir; note that a "flake" refers to the entire directory)
+3. Run `nixos-rebuild switch --flake /etc/nixos#your-architecture` to rebuild and restart your node. Note that this will restart the systemd service.
+
+Your node should now be running the git tag version you specified in the input url.
