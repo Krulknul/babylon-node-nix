@@ -6,7 +6,7 @@
   lib,
   ...
 }:
-
+with lib;
 let
   # babylon-node = self.packages.${pkgs.system}.default;
   options = import ./options.nix { inherit lib; };
@@ -15,7 +15,7 @@ let
   cfgfile = pkgs.writeText "babylon.config" ''
     network.id=${toString cfg.config.network.id}
     network.host_ip=${cfg.config.network.host_ip}
-    network.p2p.seed_nodes=${pkgs.concatStringsSep "," cfg.config.network.p2p.seed_nodes}
+    network.p2p.seed_nodes=${concatStringsSep "," cfg.config.network.p2p.seed_nodes}
     network.p2p.listen_port=${toString cfg.config.network.p2p.listen_port}
     network.p2p.broadcast_port=${toString cfg.config.network.p2p.broadcast_port}
     node.key.path=${cfg.config.node.key.path}
@@ -37,7 +37,7 @@ in
 {
   options.services.babylon_node = options;
 
-  config = pkgs.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     environment.etc."radixdlt/babylon_node.config".source = cfgfile;
 
     systemd.services.babylon_node = {
