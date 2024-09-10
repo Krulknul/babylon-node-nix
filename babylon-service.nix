@@ -8,7 +8,7 @@
 }:
 with lib;
 let
-  babylon-node = self.packages."aarch64-darwin";
+  babylon-node = self.packages."aarch64-darwin".default;
   print = builtins.trace "babylon-node: ${babylon-node}" "";
   options = import ./options.nix { inherit lib; };
   cfg = config.services.babylon_node;
@@ -48,7 +48,7 @@ in
       serviceConfig = {
         User = cfg.config.run_with.user;
         Group = cfg.config.run_with.group;
-        ExecStart = "${babylon-node}/bin/babylon_node -config /etc/radixdlt/babylon_node.config";
+        ExecStart = "${builtins.trace babylon-node babylon-node}/bin/babylon_node -config /etc/radixdlt/babylon_node.config";
         Restart = "always";
         WorkingDirectory = cfg.config.run_with.working_directory;
         EnvironmentFile = cfg.config.run_with.environment_file;
