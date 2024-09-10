@@ -3,23 +3,25 @@
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
   };
-  outputs = { self, nixpkgs }:
-  let
-      forAllSystems = function:
-      nixpkgs.lib.genAttrs [
-        "x86_64-linux"
-        "x86_64-darwin"
-        "aarch64-linux"
-        "aarch64-darwin"
-      ] (system: function nixpkgs.legacyPackages.${system});
+  outputs =
+    { self, nixpkgs }:
+    let
+      forAllSystems =
+        function:
+        nixpkgs.lib.genAttrs [
+          "x86_64-linux"
+          "x86_64-darwin"
+          "aarch64-linux"
+          "aarch64-darwin"
+        ] (system: function nixpkgs.legacyPackages.${system});
       allPackages = forAllSystems (pkgs: {
-            default = pkgs.callPackage ./babylon-node.nix {};
-        });
-  in
+        default = pkgs.callPackage ./babylon-node.nix { };
+      });
+    in
     {
-        packages = allPackages;
-        nixosModules.babylon_node = import ./babylon-service.nix {
-            inherit nixpkgs;
-        };
+      packages = allPackages;
+      nixosModules.babylon_node = import ./babylon-service.nix {
+        inherit nixpkgs;
+      };
     };
 }

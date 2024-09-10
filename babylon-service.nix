@@ -1,5 +1,4 @@
 { nixpkgs }:
-
 {
   config,
   lib,
@@ -9,9 +8,8 @@
 
 let
   boolToString = b: if b then "true" else "false";
-  pkgsFixed = import nixpkgs {system = pkgs.system;};
-
-  # babylon-node = s;elf.packages.${pkgs.system}.default;
+  pkgsFixed = import nixpkgs { system = pkgs.system; };
+  babylon-node = import ./babylon-node.nix { pkgs = pkgsFixed; };
   options = import ./options.nix { inherit lib; };
   cfg = config.services.babylon_node;
   cfgfile = pkgsFixed.writeText "babylon.config" ''
@@ -33,7 +31,6 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  babylon-node = import ./babylon-node.nix { pkgs = pkgsFixed; };
 
 in
 {
