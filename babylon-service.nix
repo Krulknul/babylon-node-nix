@@ -14,7 +14,7 @@ let
   # babylon-node = s;elf.packages.${pkgs.system}.default;
   options = import ./options.nix { lib = pkgsFixed.lib; };
   cfg = config.services.babylon_node;
-  cfgfile = pkgs.writeText "babylon.config" ''
+  cfgfile = pkgsFixed.writeText "babylon.config" ''
     network.id=${toString cfg.config.network.id}
     network.host_ip=${cfg.config.network.host_ip}
     network.p2p.seed_nodes=${pkgsFixed.lib.concatStringsSep "," cfg.config.network.p2p.seed_nodes}
