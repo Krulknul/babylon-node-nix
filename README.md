@@ -12,11 +12,6 @@ The new easiest way to spin up a node on [RadixDLT](https://www.radixdlt.com)'s 
 { config, pkgs, ... }:
 
 {
-  imports = [
-    /home/krulk/nix/babylon-service.nix
-    # Your other imports...
-  ];
-
   # Create a "babylon_node" user to run the process as
   users.users.babylon_node = {
     # Give the user a home directory
