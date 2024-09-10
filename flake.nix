@@ -14,9 +14,9 @@
       ] (system: function nixpkgs.legacyPackages.${system});
   in
     {
-        packages = forAllSystems (pkgs: {
+        packages = forAllSystems pkgs: {
             default = pkgs.callPackage ./babylon-node.nix;
-        });
+        };
         nixosModules.babylon_node = import ./babylon-service.nix {
             inherit self;
         };
