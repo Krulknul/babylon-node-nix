@@ -120,7 +120,7 @@ See the file [here](https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/v
 
 Please read and understand the `configuration.nix` to see all the configurations that we set in this basic example.
 
-Now run `nixos-rebuild switch`. The system will rebuild the configuration, and after a few seconds it should be finished and the Babylon node service should start running.
+Now run `nixos-rebuild switch --flake /etc/nixos#x86_64-linux`. (replacing `x86_64-linux` with your system) The system will rebuild the configuration, and after a few seconds it should be finished and the Babylon node service should start running.
 
 Just `journalctl -fu babylon_node` to confirm that it's running.
 
