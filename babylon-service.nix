@@ -3,18 +3,21 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 
 let
   boolToString = b: if b then "true" else "false";
-  pkgs = import nixpkgs {system = pkgs.system;};
+  pkgsFixed = import nixpkgs {system = pkgs.system;};
+
+  # babylon-node = s;elf.packages.${pkgs.system}.default;
   options = import ./options.nix { inherit lib; };
   cfg = config.services.babylon_node;
-  cfgfile = pkgs.writeText "babylon.config" ''
+  cfgfile = pkgsFixed.writeText "babylon.config" ''
     network.id=${toString cfg.config.network.id}
     network.host_ip=${cfg.config.network.host_ip}
-    network.p2p.seed_nodes=${pkgs.lib.concatStringsSep "," cfg.config.network.p2p.seed_nodes}
+    network.p2p.seed_nodes=${lib.concatStringsSep "," cfg.config.network.p2p.seed_nodes}
     network.p2p.listen_port=${toString cfg.config.network.p2p.listen_port}
     network.p2p.broadcast_port=${toString cfg.config.network.p2p.broadcast_port}
     node.key.path=${cfg.config.node.key.path}
@@ -30,7 +33,7 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  babylon-node = import ./babylon-node.nix { pkgs = pkgs; };
+  babylon-node = import ./babylon-node.nix { pkgs = pkgsFixed; };
 
 in
 {
