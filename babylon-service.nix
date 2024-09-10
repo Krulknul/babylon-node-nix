@@ -2,22 +2,19 @@
 
 {
   config,
-  pkgs,
   lib,
   ...
 }:
 
 let
   boolToString = b: if b then "true" else "false";
-  pkgsFixed = import nixpkgs {system = pkgs.system;};
-
-  # babylon-node = s;elf.packages.${pkgs.system}.default;
-  options = import ./options.nix { lib = pkgsFixed.lib; };
+  pkgs = import nixpkgs {system = pkgs.system;};
+  options = import ./options.nix { inherit lib; };
   cfg = config.services.babylon_node;
-  cfgfile = pkgsFixed.writeText "babylon.config" ''
+  cfgfile = pkgs.writeText "babylon.config" ''
     network.id=${toString cfg.config.network.id}
     network.host_ip=${cfg.config.network.host_ip}
-    network.p2p.seed_nodes=${pkgsFixed.lib.concatStringsSep "," cfg.config.network.p2p.seed_nodes}
+    network.p2p.seed_nodes=${pkgs.lib.concatStringsSep "," cfg.config.network.p2p.seed_nodes}
     network.p2p.listen_port=${toString cfg.config.network.p2p.listen_port}
     network.p2p.broadcast_port=${toString cfg.config.network.p2p.broadcast_port}
     node.key.path=${cfg.config.node.key.path}
@@ -33,13 +30,13 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  babylon-node = import ./babylon-node.nix { pkgs = pkgsFixed; };
+  babylon-node = import ./babylon-node.nix { pkgs = pkgs; };
 
 in
 {
   options.services.babylon_node = options;
 
-  config = pkgsFixed.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     environment.etc."radixdlt/babylon_node.config".source = cfgfile;
 
     systemd.services.babylon_node = {
