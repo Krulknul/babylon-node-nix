@@ -206,3 +206,11 @@ Some required configurations however, are not possible to configure using that c
   # Any other NixOS configurations, like firewalls or services...
 }
 ```
+
+## Versioning
+
+For this project, I am trying out the following versioning scheme:
+
+`babylon-node-version+revision`
+
+The `babylon-node-version` part specifies which version of the Babylon node software is used/compatible, and the revision is for any fixes or upgrades.
