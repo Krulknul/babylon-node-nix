@@ -3,7 +3,8 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    babylon-node-nix.url = "github:Krulknul/babylon-node-nix/flake";
+    babylon-node-nix.url = "github:Krulknul/babylon-node-nix";
+    rev = "1.2.2+1";
   };
 
   outputs =
