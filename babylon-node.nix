@@ -34,12 +34,12 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "babylon_node";
-  version = "1.2.2";
+  version = "1.2.3";
 
   srcs = [
     (fetchzip {
-      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.2/babylon-node-v1.2.2.zip";
-      sha256 = "sha256-WinZMxZtw/A1pBRU46HPc/p5dn+zUaVYSUM6RuZ2j3w=";
+      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.3/babylon-node-v1.2.3.zip";
+      sha256 = "sha256-v1JuHu+ty5U2RzNDDri44OSMo1+lkpcv4Upkq5DHk8Q=";
       name = "babylon_node";
     })
     (fetchzip {
