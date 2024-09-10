@@ -1,16 +1,14 @@
-{ nixpkgs }:
+{ self }:
 
 {
   config,
+  pkgs,
   ...
 }:
 
 
 let
-  pkgs = import nixpkgs {
-    system = config.nixpkgs.system;
-    config = config.nixpkgs.config;
-    };
+  babylon-node = self.packages.${pkgs.system}.default;
   options = import ./options.nix { lib = pkgs.lib; };
   cfg = config.services.babylon_node;
   boolToString = b: if b then "true" else "false";
