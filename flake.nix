@@ -21,6 +21,5 @@
         nixosModules.babylon_node = import ./babylon-service.nix {
             inherit self;
         };
-        # ding = self.packages."aarch64-linux".default {};
     };
 }
