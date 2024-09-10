@@ -8,7 +8,7 @@
 }:
 with lib;
 let
-  babylon-node = self.packages.${pkgs.system}.default;
+  babylon-node = self.packages.aarch64-darwin.default;
   options = import ./options.nix { inherit lib; };
   cfg = config.services.babylon_node;
   boolToString = b: if b then "true" else "false";
