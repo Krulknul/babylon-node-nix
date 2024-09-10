@@ -17,9 +17,10 @@
         });
   in
     {
-        packages = builtins.trace allPackages allPackages;
+        packages = allPackages;
         nixosModules.babylon_node = import ./babylon-service.nix {
             inherit self;
         };
+        # ding = self.packages."aarch64-linux".default {};
     };
 }
