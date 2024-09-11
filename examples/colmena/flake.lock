@@ -1,0 +1,61 @@
+{
+  "nodes": {
+    "babylon-node-nix": {
+      "inputs": {
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1726006918,
+        "narHash": "sha256-WmseHWo/ehe0eR9I7KEPDZONqffoDEtWi3XDp8r3X80=",
+        "ref": "refs/heads/main",
+        "rev": "50ff2f24b7d08647819c7bef9669d7a0188d2bf6",
+        "revCount": 32,
+        "type": "git",
+        "url": "https://github.com/Krulknul/babylon-node-nix?tag=1.2.3%2B1"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://github.com/Krulknul/babylon-node-nix?tag=1.2.3%2B1"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1725634671,
+        "narHash": "sha256-v3rIhsJBOMLR8e/RNWxr828tB+WywYIoajrZKFM+0Gg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "574d1eac1c200690e27b8eb4e24887f8df7ac27c",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-unstable",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1725930920,
+        "narHash": "sha256-RVhD9hnlTT2nJzPHlAqrWqCkA7T6CYrP41IoVRkciZM=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "44a71ff39c182edaf25a7ace5c9454e7cba2c658",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-24.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "babylon-node-nix": "babylon-node-nix",
+        "nixpkgs": "nixpkgs_2"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

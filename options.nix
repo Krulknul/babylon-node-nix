@@ -173,12 +173,12 @@ in
             options = {
               user = mkOption {
                 type = types.str;
-                default = "babylon_node";
+                default = "babylon-node";
                 description = "The user to run the service as";
               };
               group = mkOption {
                 type = types.str;
-                default = "babylon_node";
+                default = "babylon-node";
                 description = "The group to run the service as";
               };
               java_option_overrides = mkOption {
@@ -198,7 +198,7 @@ in
               # else the service will not be able to write log files and it will fail to start.
               working_directory = mkOption {
                 type = types.str;
-                default = "/home/babylon_node";
+                default = "/home/babylon-node";
                 description = "The working directory for the service. The service writes log files to this directory.";
               };
             };

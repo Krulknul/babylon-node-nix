@@ -33,14 +33,14 @@ let
   binary = systemToBinary.${stdenv.hostPlatform.system};
 in
 stdenv.mkDerivation rec {
-  pname = "babylon_node";
+  pname = "babylon-node";
   version = "1.2.3";
 
   srcs = [
     (fetchzip {
       url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.3/babylon-node-v1.2.3.zip";
       sha256 = "sha256-v1JuHu+ty5U2RzNDDri44OSMo1+lkpcv4Upkq5DHk8Q=";
-      name = "babylon_node";
+      name = "babylon-node";
     })
     (fetchzip {
       url = binary.url;
@@ -54,7 +54,7 @@ stdenv.mkDerivation rec {
     makeWrapper
   ];
 
-  sourceRoot = "babylon_node";
+  sourceRoot = "babylon-node";
 
   installPhase = ''
     mkdir -p $out/jni
@@ -68,7 +68,7 @@ stdenv.mkDerivation rec {
       --run 'export JAVA_OPTS="$JAVA_OPTS $OVERRIDE_JAVA_OPTS"' \
       --set LD_PRELOAD "$out/jni/libcorerust.${binary.libraryExtension}" \
       --set LD_LIBRARY_PATH "${pkgs.stdenv.cc.cc.lib}/lib:$LD_LIBRARY_PATH"
-    mv $out/bin/core $out/bin/babylon_node
+    mv $out/bin/core $out/bin/babylon-node
 
     wrapProgram $out/bin/keygen \
       --set JAVA_HOME "${jdk}"

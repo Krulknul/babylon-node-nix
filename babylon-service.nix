@@ -11,7 +11,7 @@ let
   pkgsFixed = import nixpkgs { system = pkgs.system; };
   babylon-node = import ./babylon-node.nix { pkgs = pkgsFixed; };
   options = import ./options.nix { inherit lib; };
-  cfg = config.services.babylon_node;
+  cfg = config.services.babylon-node;
   cfgfile = pkgsFixed.writeText "babylon.config" ''
     network.id=${toString cfg.config.network.id}
     network.host_ip=${cfg.config.network.host_ip}
@@ -34,19 +34,19 @@ let
 
 in
 {
-  options.services.babylon_node = options;
+  options.services.babylon-node = options;
 
   config = lib.mkIf cfg.enable {
-    environment.etc."radixdlt/babylon_node.config".source = cfgfile;
+    environment.etc."radixdlt/babylon-node.config".source = cfgfile;
 
-    systemd.services.babylon_node = {
+    systemd.services.babylon-node = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network.target" ];
       description = "RadixDLT Babylon Node Service";
       serviceConfig = {
         User = cfg.config.run_with.user;
         Group = cfg.config.run_with.group;
-        ExecStart = "${babylon-node}/bin/babylon_node -config /etc/radixdlt/babylon_node.config";
+        ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
         Restart = "always";
         WorkingDirectory = cfg.config.run_with.working_directory;
         EnvironmentFile = cfg.config.run_with.environment_file;

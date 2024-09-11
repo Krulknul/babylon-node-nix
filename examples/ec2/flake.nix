@@ -2,8 +2,8 @@
   description = "NixOS Flake example for babylon-node-nix usage";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
-    babylon-node-nix.url = git+https://github.com/Krulknul/babylon-node-nix?tag=1.2.3+1;
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    babylon-node-nix.url = "git+https://github.com/Krulknul/babylon-node-nix?tag=1.2.3+1";
   };
 
   outputs =
@@ -21,7 +21,7 @@
               inherit system;
               modules = [
                 ./configuration.nix
-                babylon-node-nix.nixosModules.babylon_node
+                babylon-node-nix.nixosModules.babylon-node
               ];
             };
         in
