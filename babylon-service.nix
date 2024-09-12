@@ -32,8 +32,10 @@ let
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
   download-snapshot = import ./snapshot.nix {
-    pkgs = pkgsFixed;
-    dbDir = cfg.config.db.location;
+      pkgs = pkgsFixed;
+      dbDir = cfg.config.db.location;
+      user = cfg.config.run_with.user;
+      group = cfg.config.run_with.group;
     };
 
 in

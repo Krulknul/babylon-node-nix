@@ -83,8 +83,8 @@ case "\$1" in
         wipe_ledger
         extract_snapshot
         cleanup
-        start_node
         set_ownership
+        start_node
         ;;
     *)
         echo "Usage: \$0 {download|extract|all}"
