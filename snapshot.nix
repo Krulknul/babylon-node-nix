@@ -21,6 +21,7 @@ function stop_node() {
 
 function download_snapshot() {
     mkdir -p ${dbDir}/download
+    rm -rf ${dbDir}/download/*
     echo "Downloading the latest snapshot..."
     max_retries=5
     attempt_num=1
@@ -69,15 +70,64 @@ function start_node() {
     systemctl start babylon-node
 }
 
+function yes_no() {
+    while true; do
+        read -p "Do you wish to continue? (y/N) " yn
+        case \$yn in
+            [Yy]*) break;;
+            [Nn]* ) echo "Aborting"; exit;;
+            * ) echo "Aborting."; exit;;
+        esac
+    done
+}
+
+function download() {
+  echo "Running this script will:
+- Create a directory at ${dbDir}/download if it does not exist.
+- Wipe that directory to start clean.
+- Download the latest snapshot from snapshots.radix.live."
+
+  yes_no
+  download_snapshot
+
+}
+
+function extract() {
+  echo "Running this script will:
+- Wipe the ledger database directory as set in your NixOS configuration, except for the download directory.
+- Extract the snapshot to the database directory."
+
+  yes_no
+  wipe_ledger
+  extract_snapshot
+  set_ownership
+}
+
+function all() {
+  echo "Running this script will:
+- Stop your Radix node.
+- Wipe the ledger database directory as set in your NixOS configuration.
+- Download the latest snapshot from snapshots.radix.live.
+- Extract the snapshot to the database directory.
+- Start your Radix node."
+
+  yes_no
+  stop_node
+  download_snapshot
+  wipe_ledger
+  extract_snapshot
+  cleanup
+  set_ownership
+  start_node
+}
+
 case "\$1" in
     download)
-        download_snapshot
+        download
         ;;
     extract)
-        extract_snapshot
-        set_ownership
+        extract
         ;;
-    all)
         stop_node
         download_snapshot
         wipe_ledger
