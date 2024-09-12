@@ -14,7 +14,9 @@ pkgs.stdenv.mkDerivation rec {
     aria2
     zstd
     gnutar
+    pv
     makeWrapper
+    gawk
   ];
   phases = [ "installPhase" ];
 
