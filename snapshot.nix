@@ -40,7 +40,7 @@ pkgs.stdenv.mkDerivation {
     CURRENT_DATE=$(date +"%Y-%m-%d")
 
     # Download the latest snapshot
-    ${pkgs.aria2}/bin/aria2c -x3 -s16 -k4M --piece-length=4M --disk-cache=256M --lowest-speed-limit=250k ftp://snapshots.radix.live/$CURRENT_DATE/RADIXDB-INDEX.tar.zst.metalink -d ${dbDir}/download
+    ${pkgs.aria2}/bin/aria2c -x3 -s16 -k4M --piece-length=4M --disk-cache=256M --lowest-speed-limit=250k ftp://snapshots.radix.live/\$CURRENT_DATE/RADIXDB-INDEX.tar.zst.metalink -d ${dbDir}/download
 
     # Extract the snapshot
     ${pkgs.zstd}/bin/zstd -d ./dir/download/RADIXDB-INDEX.tar.zst --stdout | tar xvf - -C ${dbDir}
