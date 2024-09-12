@@ -42,7 +42,7 @@ function wipe_ledger() {
 
 function extract_snapshot() {
     echo "Extracting the snapshot..."
-    pv -s $(stat -c%s "$DB_DIR/download/RADIXDB-INDEX.tar.zst") "$DB_DIR/download/RADIXDB-INDEX.tar.zst" | tar -I 'zstd -d -T0' -xf - -C $DB_DIR --checkpoint=10000 --checkpoint-action=exec='echo -n "."'
+    pv -s $(stat -c%s "$DB_DIR/download/RADIXDB-INDEX.tar.zst") "$DB_DIR/download/RADIXDB-INDEX.tar.zst" | tar -I 'zstd -d -T0' -xf - -C $DB_DIR
     echo "Extraction complete."
 }
 
