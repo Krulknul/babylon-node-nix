@@ -14,7 +14,7 @@ function download_snapshot() {
     mkdir -p $DB_DIR/download
     rm -rf $DB_DIR/download/*
     echo "Downloading the latest snapshot..."
-    CURRENT_DATE = $(date +"%Y-%m-%d")
+    CURRENT_DATE=$(date +"%Y-%m-%d")
     max_retries=5
     attempt_num=1
     while [ $attempt_num -le $max_retries ]
