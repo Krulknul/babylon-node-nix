@@ -1,4 +1,3 @@
-#!/bin/bash
 shopt -s extglob
 
 function stop_node() {
