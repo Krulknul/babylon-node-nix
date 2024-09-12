@@ -1,7 +1,7 @@
 shopt -s extglob
 
 YES=false
-if $2 == "-y"; then
+if [ "$2" == "-y" ]; then
     YES=true
 fi
 
