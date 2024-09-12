@@ -15,8 +15,8 @@ pkgs.stdenv.mkDerivation {
 
     echo "Running this script will:
   - Stop your Babylon node.
-  - Wipe the ledger database directory as set in your NixOS configuration.
   - Download the latest snapshot from snapshots.radix.live.
+  - Wipe the ledger database directory as set in your NixOS configuration.
   - Extract the snapshot to the database directory.
   - Start your Babylon node.
 
@@ -35,12 +35,10 @@ Are you sure you wish to continue? [y/N]
     echo "Stopping the Radix node.."
     systemctl stop babylon-node
 
-    echo "Wiping the ledger database directory..."
-    rm -rf ${dbDir}/**
-    mkdir ${dbDir}/download
 
     CURRENT_DATE=$(date +"%Y-%m-%d")
 
+    mkdir ${dbDir}/download
     echo "Downloading the latest snapshot..."
     max_retries=5
     attempt_num=1
@@ -55,6 +53,11 @@ Are you sure you wish to continue? [y/N]
       echo "Failed to download after \$max_retries attempts, aborting."
       exit 1
     fi
+
+    shopt -s extglob
+    echo "Wiping the ledger database directory..."
+    rm -rf ${dbDir}/** !(${dbDir}/download)
+
     echo "Extracting the snapshot..."
     ${pkgs.zstd}/bin/zstd -d ${dbDir}/download/RADIXDB-INDEX.tar.zst --stdout | ${pkgs.gnutar}/bin/tar xvf - -C ${dbDir}
 
