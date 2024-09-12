@@ -51,7 +51,7 @@ function wipe_ledger() {
 function extract_snapshot() {
     echo "Extracting the snapshot..."
     ${pkgs.zstd}/bin/zstd -d ${dbDir}/download/RADIXDB-INDEX.tar.zst --stdout | tar -xf - -C ${dbDir} --checkpoint=10000 --checkpoint-action=exec='echo -n "."'
-    echo "\\nExtraction complete."
+    echo "Extraction complete."
 }
 
 function set_ownership() {
