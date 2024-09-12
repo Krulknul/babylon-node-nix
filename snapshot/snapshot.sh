@@ -67,6 +67,9 @@ function start_node() {
 }
 
 function yes_no() {
+    if [ "$2" == "-y" ]; then
+        return
+    fi
     while true; do
         read -p "Do you wish to continue? (y/N) " yn
         case $yn in
@@ -119,13 +122,15 @@ function all() {
 }
 
 function help() {
-    echo "Usage: ledger-snapshot [install|download|extract|help]
+    echo "Usage: ledger-snapshot [install|download|extract|help] [-y]
 
 Subcommands:
     install - Run all steps: download and extract the database, and restart the Radix node.
     download - Only download the latest snapshot from snapshots.radix.live.
     extract - Extract the snapshot to the database directory.
     help - Display this help message.
+Options:
+    -y Skip confirmation prompts.
 
 Each command will list its steps and ask for confirmation before proceeding.
 This script automatically detects and uses the database directory and user/group ownership variables from your NixOS configuration to make the process as seamless as possible.
