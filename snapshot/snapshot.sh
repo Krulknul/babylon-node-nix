@@ -72,7 +72,7 @@ function download() {
     echo "Running this script will:
     - Create a directory at $DB_DIR/download if it does not exist.
     - Wipe that directory to start clean.
-    - Download the latest snapshot from snapshots.radix.live."
+    - Download the latest snapshot from snapshots.radix.live to that directory."
 
     yes_no
     download_snapshot
@@ -81,8 +81,9 @@ function download() {
 
 function extract() {
     echo "Running this script will:
-    - Wipe the ledger database directory as set in your NixOS configuration, except for the download directory.
-    - Extract the snapshot to the database directory."
+    - Wipe the ledger database directory as set in your NixOS configuration ($DB_DIR), except for the download directory.
+    - Extract the snapshot to the database directory.
+    - Set ownership of the database directory to $USER:$GROUP."
 
     yes_no
     wipe_ledger
@@ -109,11 +110,17 @@ function all() {
 }
 
 function help() {
-    echo "Usage: $0 [install|download|extract|help]"
-    echo "install: Run all steps to download, extract, and restart the Radix node."
-    echo "download: Only download the latest snapshot from snapshots.radix.live."
-    echo "extract: Extract the snapshot to the database directory."
-    echo "help: Display this help message."
+    echo "Usage: ledger-snapshot [install|download|extract|help]
+
+Subcommands:
+    install - Run all steps: download and extract the database, and restart the Radix node.
+    download - Only download the latest snapshot from snapshots.radix.live.
+    extract - Extract the snapshot to the database directory.
+    help - Display this help message.
+
+Each command will list its steps and ask for confirmation before proceeding.
+This script automatically detects and uses the database directory and user/group ownership variables from your NixOS configuration to make the process as seamless as possible.
+"
 }
 
 case "$1" in
