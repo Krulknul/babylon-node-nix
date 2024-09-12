@@ -39,10 +39,21 @@ pkgs.stdenv.mkDerivation {
 
     CURRENT_DATE=$(date +"%Y-%m-%d")
 
-    # Download the latest snapshot
     echo "Downloading the latest snapshot..."
-    ${pkgs.aria2}/bin/aria2c -x3 -s16 -k4M --piece-length=4M --disk-cache=256M --lowest-speed-limit=250k ftp://snapshots.radix.live/\$CURRENT_DATE/RADIXDB-INDEX.tar.zst.metalink -d ${dbDir}/download
+    echo "Downloading the latest snapshot..."
+    max_retries=5
+    attempt_num=1
+    while [ \$attempt_num -le \$max_retries ]
+    do
+      ${pkgs.aria2}/bin/aria2c -x3 -s16 -k4M --piece-length=4M --disk-cache=256M --lowest-speed-limit=250k ftp://snapshots.radix.live/\$CURRENT_DATE/RADIXDB-INDEX.tar.zst.metalink -d ${dbDir}/download && break
+      echo "Download failed, attempt \$attempt_num of \$max_retries..."
+      ((attempt_num++))
+    done
 
+if [ \$attempt_num -gt \$max_retries ]; then
+    echo "Failed to download after \$max_retries attempts, aborting."
+    exit 1
+fi
     echo "Extracting the snapshot..."
     ${pkgs.zstd}/bin/zstd -d ./dir/download/RADIXDB-INDEX.tar.zst --stdout | tar xvf - -C ${dbDir}
 
@@ -50,7 +61,6 @@ pkgs.stdenv.mkDerivation {
     rm -rf ${dbDir}/download
     rm -rf ${dbDir}/address-book
 
-    # Start the Radix node
     echo "Starting the Radix node.."
     systemctl start babylon-node
   '';
