@@ -1,4 +1,4 @@
-{ pkgs ? import <nixpkgs> {}, dbDir }:
+{ pkgs ? import <nixpkgs> {}, dbDir, user, group }:
 
 pkgs.stdenv.mkDerivation {
   name = "download-snapshot";
@@ -50,7 +50,12 @@ function wipe_ledger() {
 function extract_snapshot() {
     echo "Extracting the snapshot..."
     ${pkgs.zstd}/bin/zstd -d ${dbDir}/download/RADIXDB-INDEX.tar.zst --stdout | tar -xf - -C ${dbDir} --checkpoint=10000 --checkpoint-action=exec='echo -n "."'
-    echo "\nExtraction complete."
+    echo "\\nExtraction complete."
+}
+
+function set_ownership() {
+    echo "Setting ownership of the database directory..."
+    chown -R ${user}:${group} ${dbDir}
 }
 
 function cleanup() {
@@ -70,6 +75,7 @@ case "\$1" in
         ;;
     extract)
         extract_snapshot
+        set_ownership
         ;;
     all)
         stop_node
@@ -78,6 +84,7 @@ case "\$1" in
         extract_snapshot
         cleanup
         start_node
+        set_ownership
         ;;
     *)
         echo "Usage: \$0 {download|extract|all}"
