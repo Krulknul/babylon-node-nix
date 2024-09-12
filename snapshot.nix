@@ -128,16 +128,8 @@ case "\$1" in
     extract)
         extract
         ;;
-        stop_node
-        download_snapshot
-        wipe_ledger
-        extract_snapshot
-        cleanup
-        set_ownership
-        start_node
-        ;;
     *)
-        echo "Usage: \$0 {download|extract|all}"
+        all
         ;;
 esac
   '';
