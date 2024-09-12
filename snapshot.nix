@@ -12,13 +12,15 @@ pkgs.stdenv.mkDerivation {
   installPhase =
   let script = ''
     #!${pkgs.bash}/bin/bash
+
     echo "Running this script will:
-    - Stop your Radix node.
-    - Wipe the ledger database directory as set in your NixOS configuration.
-    - Download the latest snapshot from snapshots.radix.live.
-    - Extract the snapshot to the database directory.
-    - Start your Radix node.
-    Are you sure you wish to continue? [y/N]
+  - Stop your Babylon node.
+  - Wipe the ledger database directory as set in your NixOS configuration.
+  - Download the latest snapshot from snapshots.radix.live.
+  - Extract the snapshot to the database directory.
+  - Start your Babylon node.
+
+Are you sure you wish to continue? [y/N]
     "
 
     while true; do
@@ -40,7 +42,6 @@ pkgs.stdenv.mkDerivation {
     CURRENT_DATE=$(date +"%Y-%m-%d")
 
     echo "Downloading the latest snapshot..."
-    echo "Downloading the latest snapshot..."
     max_retries=5
     attempt_num=1
     while [ \$attempt_num -le \$max_retries ]
@@ -50,12 +51,12 @@ pkgs.stdenv.mkDerivation {
       ((attempt_num++))
     done
 
-if [ \$attempt_num -gt \$max_retries ]; then
-    echo "Failed to download after \$max_retries attempts, aborting."
-    exit 1
-fi
+    if [ \$attempt_num -gt \$max_retries ]; then
+      echo "Failed to download after \$max_retries attempts, aborting."
+      exit 1
+    fi
     echo "Extracting the snapshot..."
-    ${pkgs.zstd}/bin/zstd -d ./dir/download/RADIXDB-INDEX.tar.zst --stdout | tar xvf - -C ${dbDir}
+    ${pkgs.zstd}/bin/zstd -d ${dbDir}/download/RADIXDB-INDEX.tar.zst --stdout | ${pkgs.gnutar}/bin/tar xvf - -C ${dbDir}
 
     echo "Cleaning up..."
     rm -rf ${dbDir}/download
