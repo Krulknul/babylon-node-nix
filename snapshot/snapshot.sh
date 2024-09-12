@@ -1,5 +1,10 @@
 shopt -s extglob
 
+YES=false
+if $2 == "-y"; then
+    YES=true
+fi
+
 function stop_node() {
     echo "Stopping the Radix node.."
     systemctl stop babylon-node
@@ -67,7 +72,7 @@ function start_node() {
 }
 
 function yes_no() {
-    if [ "$2" == "-y" ]; then
+    if $YES; then
         return
     fi
     while true; do
