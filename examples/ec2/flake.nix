@@ -2,7 +2,7 @@
   description = "NixOS Flake example for babylon-node-nix usage";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
     babylon-node-nix.url = "git+https://github.com/Krulknul/babylon-node-nix?tag=1.2.3+1";
   };
 

@@ -1,5 +1,0 @@
-Host host-b
-    HostName 44.223.32.235
-    User root
-    Port 22
-    IdentityFile ~/.ssh/aws_radix.pem

@@ -5,17 +5,18 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1726006918,
-        "narHash": "sha256-WmseHWo/ehe0eR9I7KEPDZONqffoDEtWi3XDp8r3X80=",
-        "ref": "refs/heads/main",
-        "rev": "50ff2f24b7d08647819c7bef9669d7a0188d2bf6",
-        "revCount": 32,
-        "type": "git",
-        "url": "https://github.com/Krulknul/babylon-node-nix?tag=1.2.3%2B1"
+        "lastModified": 1726159941,
+        "narHash": "sha256-FIinkVzlFQiYlxSFEkiEictNcsenWxN8AxZ/1f7lL7Y=",
+        "owner": "Krulknul",
+        "repo": "babylon-node-nix",
+        "rev": "56a23cfc6a96ac149a8d4f510eeae8079755f106",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://github.com/Krulknul/babylon-node-nix?tag=1.2.3%2B1"
+        "owner": "Krulknul",
+        "ref": "add-example-for-usage-with-the-colmena-deployment-tool",
+        "repo": "babylon-node-nix",
+        "type": "github"
       }
     },
     "nixpkgs": {

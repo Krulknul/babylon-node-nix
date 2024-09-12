@@ -115,8 +115,8 @@ function extract() {
 function all() {
     echo "Running this script will:
     - Stop your Radix node.
-    - Wipe the ledger database directory as set in your NixOS configuration.
     - Download the latest snapshot from snapshots.radix.live.
+    - Wipe the ledger database directory as set in your NixOS configuration ($DB_DIR), except for the download directory.
     - Extract the snapshot to the database directory.
     - Start your Radix node."
 

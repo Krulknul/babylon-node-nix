@@ -13,9 +13,8 @@
     vim
     htop
     git
+    magic-wormhole # A secure way to transfer files between computers
   ];
-
-  networking.hostName = "babylon-node";
 
   # We need to enable these experimental features
   # for some features of NixOS - like flakes - to work
