@@ -12,6 +12,7 @@ pkgs.stdenv.mkDerivation {
   installPhase =
   let script = ''
 #!${pkgs.bash}/bin/bash
+shopt -s extglob
 
 function stop_node() {
     echo "Stopping the Radix node.."
@@ -42,7 +43,6 @@ function download_snapshot() {
 }
 
 function wipe_ledger() {
-    shopt -s extglob
     echo "Wiping the ledger database directory..."
     rm -rf ${dbDir}/!(download)
 }
