@@ -33,7 +33,7 @@ let
   '';
   download-snapshot = import ./snapshot.nix {
     pkgs = pkgsFixed;
-    cfg.config.db.location
+    dbDir = cfg.config.db.location;
     };
   environment.systemPackages = with pkgs; [
               download-snapshot
