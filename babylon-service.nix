@@ -31,7 +31,7 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  download-snapshot = import ./snapshot.nix {
+  download-snapshot = import ./snapshot/snapshot.nix {
       pkgs = pkgsFixed;
       dbDir = cfg.config.db.location;
       user = cfg.config.run_with.user;
