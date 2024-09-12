@@ -14,24 +14,23 @@
         };
         # Here's one host, but you can add more hosts with different names.
         # For the SSH credentials, it finds a host with the same name in the SSH config file in this directory.
-        host-b =
-          {
-            # Colmena-specific configuration related to the deployment
-            deployment = {
-              buildOnTarget = true;
-              keys."keystore.ks" = {
-                keyFile = ./keystore.ks;
-                destDir = "/home/babylon-node";
-                user = "babylon-node";
-                group = "babylon-node";
-              };
+        host-b = {
+          # Colmena-specific configuration related to the deployment
+          deployment = {
+            buildOnTarget = true;
+            keys."keystore.ks" = {
+              keyFile = ./keystore.ks;
+              destDir = "/home/babylon-node";
+              user = "babylon-node";
+              group = "babylon-node";
             };
-            imports = [
-              babylon-node-nix.nixosModules.babylon-node
-              # using the same system configuration as the EC2 example
-              ../ec2/configuration.nix
-            ];
           };
+          imports = [
+            babylon-node-nix.nixosModules.babylon-node
+            # using the same system configuration as the EC2 example
+            ../ec2/configuration.nix
+          ];
+        };
       };
     };
 }
