@@ -17,6 +17,7 @@ pkgs.stdenv.mkDerivation rec {
     pv
     makeWrapper
     gawk
+    coreutils-full
   ];
   phases = [ "installPhase" ];
 
