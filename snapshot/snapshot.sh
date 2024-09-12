@@ -32,7 +32,12 @@ function download_snapshot() {
 
 function wipe_ledger() {
     echo "Wiping the ledger database directory..."
-    rm -rf $DB_DIR/!(download)
+    if rm -rf $DB_DIR/!(download); then
+        echo "Wipe complete."
+    else
+        echo "Failed to wipe the database directory."
+        exit 1
+    fi
 }
 
 function extract_snapshot() {
@@ -48,8 +53,12 @@ function set_ownership() {
 
 function cleanup() {
     echo "Cleaning up..."
-    rm -rf $DB_DIR/download
-    rm -rf $DB_DIR/address-book
+    if rm -rf $DB_DIR/download && rm -rf $DB_DIR/address-book; then
+        echo "Cleanup complete."
+    else
+        echo "Failed to clean up."
+        exit 1
+    fi
 }
 
 function start_node() {
