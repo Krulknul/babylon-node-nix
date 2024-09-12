@@ -98,14 +98,18 @@ function download() {
 
 function extract() {
     echo "Running this script will:
+    - Stop your Radix node.
     - Wipe the ledger database directory as set in your NixOS configuration ($DB_DIR), except for the download directory.
     - Extract the snapshot to the database directory.
-    - Set ownership of the database directory to $USER:$GROUP."
+    - Set ownership of the database directory to $USER:$GROUP.
+    - Start your Radix node."
 
     yes_no
+    stop_node
     wipe_ledger
     extract_snapshot
     set_ownership
+    start_node
 }
 
 function all() {
