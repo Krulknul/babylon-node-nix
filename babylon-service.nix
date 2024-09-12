@@ -35,9 +35,6 @@ let
     pkgs = pkgsFixed;
     dbDir = cfg.config.db.location;
     };
-  environment.systemPackages = with pkgs; [
-              download-snapshot
-            ];
 
 in
 {
@@ -62,5 +59,9 @@ in
         OVERRIDE_JAVA_OPTS = cfg.config.run_with.java_option_overrides;
       };
     };
+
+    environment.systemPackages = with pkgs; [
+              download-snapshot
+            ];
   };
 }
