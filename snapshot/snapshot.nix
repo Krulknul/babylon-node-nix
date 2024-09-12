@@ -1,10 +1,21 @@
-{ pkgs ? import <nixpkgs> {}, dbDir ? ".", user ? "bing", group ? "bing" }:
+{
+  pkgs ? import <nixpkgs> { },
+  dbDir,
+  user,
+  group,
+}:
 
 pkgs.stdenv.mkDerivation rec {
   name = "ledger-snapshot";
   version = "1.0";
 
-  buildInputs = with pkgs ;[ bash aria2 zstd gnutar makeWrapper cowsay ];
+  buildInputs = with pkgs; [
+    bash
+    aria2
+    zstd
+    gnutar
+    makeWrapper
+  ];
   phases = [ "installPhase" ];
 
   # No source file is needed

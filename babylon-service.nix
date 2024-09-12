@@ -31,39 +31,41 @@ let
     api.prometheus.port=${toString cfg.config.api.prometheus.port}
     api.core.flags.enable_unbounded_endpoints=${boolToString cfg.config.api.core.flags.enable_unbounded_endpoints}
   '';
-  download-snapshot = import ./snapshot/snapshot.nix {
-      pkgs = pkgsFixed;
-      dbDir = cfg.config.db.location;
-      user = cfg.config.run_with.user;
-      group = cfg.config.run_with.group;
-    };
+  ledger-snapshot = import ./snapshot/snapshot.nix {
+    pkgs = pkgsFixed;
+    dbDir = cfg.config.db.location;
+    user = cfg.config.run_with.user;
+    group = cfg.config.run_with.group;
+  };
 
 in
 {
   options.services.babylon-node = options;
+  config = lib.mkMerge [
+    (lib.mkIf cfg.enable {
+      environment.etc."radixdlt/babylon-node.config".source = cfgfile;
 
-  config = lib.mkIf cfg.enable {
-    environment.etc."radixdlt/babylon-node.config".source = cfgfile;
-
-    systemd.services.babylon-node = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network.target" ];
-      description = "RadixDLT Babylon Node Service";
-      serviceConfig = {
-        User = cfg.config.run_with.user;
-        Group = cfg.config.run_with.group;
-        ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
-        Restart = "always";
-        WorkingDirectory = cfg.config.run_with.working_directory;
-        EnvironmentFile = cfg.config.run_with.environment_file;
+      systemd.services.babylon-node = {
+        wantedBy = [ "multi-user.target" ];
+        after = [ "network.target" ];
+        description = "RadixDLT Babylon Node Service";
+        serviceConfig = {
+          User = cfg.config.run_with.user;
+          Group = cfg.config.run_with.group;
+          ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
+          Restart = "always";
+          WorkingDirectory = cfg.config.run_with.working_directory;
+          EnvironmentFile = cfg.config.run_with.environment_file;
+        };
+        environment = {
+          OVERRIDE_JAVA_OPTS = cfg.config.run_with.java_option_overrides;
+        };
       };
-      environment = {
-        OVERRIDE_JAVA_OPTS = cfg.config.run_with.java_option_overrides;
-      };
-    };
-
-    environment.systemPackages = with pkgs; [
-              download-snapshot
-            ];
-  };
+    })
+    {
+      environment.systemPackages = with pkgs; [
+        ledger-snapshot
+      ];
+    }
+  ];
 }
