@@ -36,7 +36,7 @@ Are you sure you wish to continue? [y/N]
     systemctl stop babylon-node
 
 
-    CURRENT_DATE=$(date +"%Y-%m-%d")
+    CURRENT_DATE=\$(date +"%Y-%m-%d")
 
     mkdir ${dbDir}/download
     echo "Downloading the latest snapshot..."
@@ -56,7 +56,7 @@ Are you sure you wish to continue? [y/N]
 
     shopt -s extglob
     echo "Wiping the ledger database directory..."
-    rm -rf ${dbDir}/** !(${dbDir}/download)
+    rm -rf  ${dbDir}/!(download)
 
     echo "Extracting the snapshot..."
     ${pkgs.zstd}/bin/zstd -d ${dbDir}/download/RADIXDB-INDEX.tar.zst --stdout | ${pkgs.gnutar}/bin/tar xvf - -C ${dbDir}
