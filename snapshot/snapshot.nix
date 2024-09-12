@@ -1,7 +1,7 @@
 { pkgs ? import <nixpkgs> {}, dbDir ? ".", user ? "bing", group ? "bing" }:
 
 pkgs.stdenv.mkDerivation rec {
-  name = "download-snapshot";
+  name = "ledger-snapshot";
   version = "1.0";
 
   buildInputs = with pkgs ;[ bash aria2 zstd gnutar makeWrapper cowsay ];
@@ -12,9 +12,9 @@ pkgs.stdenv.mkDerivation rec {
 
   installPhase = ''
     mkdir -p $out/bin
-    cp $src $out/bin/download-snapshot
-    chmod +x $out/bin/download-snapshot
-    wrapProgram $out/bin/download-snapshot \
+    cp $src $out/bin/ledger-snapshot
+    chmod +x $out/bin/ledger-snapshot
+    wrapProgram $out/bin/ledger-snapshot \
       --set DB_DIR ${dbDir} \
       --set USER ${user} \
       --set GROUP ${group} \

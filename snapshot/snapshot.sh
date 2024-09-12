@@ -108,6 +108,14 @@ function all() {
     start_node
 }
 
+function help() {
+    echo "Usage: $0 [install|download|extract|help]"
+    echo "install: Run all steps to download, extract, and restart the Radix node."
+    echo "download: Only download the latest snapshot from snapshots.radix.live."
+    echo "extract: Extract the snapshot to the database directory."
+    echo "help: Display this help message."
+}
+
 case "$1" in
     download)
         download
@@ -115,7 +123,13 @@ case "$1" in
     extract)
         extract
         ;;
-    *)
+    install)
         all
+        ;;
+    help)
+        help
+        ;;
+    *)
+        help
         ;;
 esac
