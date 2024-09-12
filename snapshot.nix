@@ -11,7 +11,7 @@ pkgs.stdenv.mkDerivation {
 
   installPhase =
   let script = ''
-#!${pkg.bash}/bin/bash
+#!${pkgs.bash}/bin/bash
 
 function stop_node() {
     echo "Stopping the Radix node.."
