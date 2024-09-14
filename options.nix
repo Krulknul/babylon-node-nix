@@ -187,10 +187,10 @@ in
                 description = "Java option overrides";
                 example = "-Xms12g -Xmx12g";
               };
-              environment_file = mkOption {
+              keystore_password_file = mkOption {
                 type = types.str;
                 default = "";
-                description = "The environment file that contains the environment variable RADIX_NODE_KEYSTORE_PASSWORD.";
+                description = "A file that contains the keystore password in cleartext.";
               };
               # I'm not sure whether it is possible to override the directory where log files
               # are written, so it is not currently an option you can set.
