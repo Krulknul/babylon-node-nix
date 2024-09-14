@@ -62,7 +62,6 @@ in
           ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
           Restart = "always";
           WorkingDirectory = cfg.config.run_with.working_directory;
-          EnvironmentFile = cfg.config.run_with.environment_file;
           LimitNOFILE = 65536;
           LimitNPROC = 65536;
           LimitMEMLOCK = "infinity";
