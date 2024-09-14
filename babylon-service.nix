@@ -47,7 +47,14 @@ in
 
       systemd.services.babylon-node = {
         wantedBy = [ "multi-user.target" ];
-        after = [ "network.target" ];
+        after = [
+        "network-online.target"
+        "local-fs.target"
+        "nns-lookup.target"
+        "time-sync.target"
+        "systemd-journald-dev-log.socket"
+        ];
+        wants = [ "network-online.target" ];
         description = "RadixDLT Babylon Node Service";
         serviceConfig = {
           User = cfg.config.run_with.user;
@@ -56,6 +63,11 @@ in
           Restart = "always";
           WorkingDirectory = cfg.config.run_with.working_directory;
           EnvironmentFile = cfg.config.run_with.environment_file;
+          LimitNOFILE = 65536;
+          LimitNPROC = 65536;
+          LimitMEMLOCK = "infinity";
+          SuccessExitStatus = "143";
+          TimeoutStopSec = 10;
         };
         environment = {
           OVERRIDE_JAVA_OPTS = cfg.config.run_with.java_option_overrides;
