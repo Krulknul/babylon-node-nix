@@ -59,10 +59,11 @@ in
         serviceConfig = {
           User = cfg.config.run_with.user;
           Group = cfg.config.run_with.group;
-          ExecStartPre="/bin/sh -c 'export RADIX_NODE_KEYSTORE_PASSWORD=\$(cat ${cfg.config.run_with.keystore_password_file})'";
+          ExecStartPre="/bin/bash -c 'export RADIX_NODE_KEYSTORE_PASSWORD=\$(cat ${cfg.config.run_with.keystore_password_file})'";
           ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
           Restart = "always";
           WorkingDirectory = cfg.config.run_with.working_directory;
+          EnvironmentFile = cfg.config.run_with.environment_file;
           LimitNOFILE = 65536;
           LimitNPROC = 65536;
           LimitMEMLOCK = "infinity";
