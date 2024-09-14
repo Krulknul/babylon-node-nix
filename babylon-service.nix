@@ -59,7 +59,7 @@ in
         serviceConfig = {
           User = cfg.config.run_with.user;
           Group = cfg.config.run_with.group;
-          ExecStartPre="/bin/bash -c 'export RADIX_NODE_KEYSTORE_PASSWORD=\$(cat ${cfg.config.run_with.keystore_password_file})'";
+          ExecStartPre="${pkgs.bash}/bin/bash -c 'export RADIX_NODE_KEYSTORE_PASSWORD=\$(cat ${cfg.config.run_with.keystore_password_file})'";
           ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
           Restart = "always";
           WorkingDirectory = cfg.config.run_with.working_directory;
