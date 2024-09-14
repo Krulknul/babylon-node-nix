@@ -68,6 +68,9 @@ in
           LimitMEMLOCK = "infinity";
           SuccessExitStatus = "143";
           TimeoutStopSec = 10;
+          LoadCredential = [
+            "RADIX_NODE_KEYSTORE_PASSWORD:${cfg.config.run_with.keystore_password_file}"
+          ]
         };
         environment = {
           OVERRIDE_JAVA_OPTS = cfg.config.run_with.java_option_overrides;
