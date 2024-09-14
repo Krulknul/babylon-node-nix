@@ -60,10 +60,10 @@ in
           User = cfg.config.run_with.user;
           Group = cfg.config.run_with.group;
           ExecStart = ''
-            /bin/sh -c '
+            "/bin/sh -c '
               export RADIX_NODE_KEYSTORE_PASSWORD=$(cat ${cfg.config.run_with.keystore_password_file})
               ${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config
-            '
+            '"
           '';
           Restart = "always";
           WorkingDirectory = cfg.config.run_with.working_directory;
