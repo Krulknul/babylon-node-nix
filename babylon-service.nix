@@ -59,7 +59,7 @@ in
         serviceConfig = {
           User = cfg.config.run_with.user;
           Group = cfg.config.run_with.group;
-          ExecStart = "${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
+          ExecStart = "RADIX_NODE_KEYSTORE_PASSWORD=\$(cat ${cfg.config.run_with.keystore_password_file}) ${babylon-node}/bin/babylon-node -config /etc/radixdlt/babylon-node.config";
           Restart = "always";
           WorkingDirectory = cfg.config.run_with.working_directory;
           LimitNOFILE = 65536;
@@ -67,9 +67,6 @@ in
           LimitMEMLOCK = "infinity";
           SuccessExitStatus = "143";
           TimeoutStopSec = 10;
-          LoadCredential = [
-            "RADIX_NODE_KEYSTORE_PASSWORD:${cfg.config.run_with.keystore_password_file}"
-          ];
         };
         environment = {
           OVERRIDE_JAVA_OPTS = cfg.config.run_with.java_option_overrides;
