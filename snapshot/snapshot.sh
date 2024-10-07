@@ -1,26 +1,46 @@
+#!/bin/bash
+
 shopt -s extglob
 
+# Default values
 YES=false
-if [ "$2" == "-y" ]; then
-    YES=true
-fi
+CURRENT_DATE=$(date +"%Y-%m-%d")
 
+# Parse options using getopts
+while getopts "yd:" opt; do
+  case $opt in
+    y)
+      YES=true
+      ;;
+    d)
+      CURRENT_DATE="$OPTARG"
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+# Shift positional parameters to get subcommand
+shift $((OPTIND -1))
+
+# Functions remain the same, using the updated variables
 function stop_node() {
-    echo "Stopping the Radix node.."
+    echo "Stopping the Radix node..."
     systemctl stop babylon-node
 }
 
 function download_snapshot() {
     mkdir -p $DB_DIR/download
     rm -rf $DB_DIR/download/*
-    echo "Downloading the latest snapshot..."
-    CURRENT_DATE=$(date +"%Y-%m-%d")
+    echo "Downloading the latest snapshot for date $CURRENT_DATE..."
     max_retries=5
     attempt_num=1
     while [ $attempt_num -le $max_retries ]
     do
-      echo "Attempt $attempt_num of $max_retries: "
-      if aria2c -x3 -s16 -k4M --piece-length=4M --disk-cache=256M --lowest-speed-limit=250k ftp://snapshots.radix.live/$CURRENT_DATE/RADIXDB-INDEX.tar.zst.metalink -d $DB_DIR/download; then
+      echo "Attempt $attempt_num of $max_retries:"
+      if aria2c -x3 -s16 -k4M --piece-length=4M --disk-cache=256M --lowest-speed-limit=250k "ftp://snapshots.radix.live/$CURRENT_DATE/RADIXDB-INDEX.tar.zst.metalink" -d $DB_DIR/download; then
         echo "Download successful!"
         break
       else
@@ -67,7 +87,7 @@ function cleanup() {
 }
 
 function start_node() {
-    echo "Starting the Radix node.."
+    echo "Starting the Radix node..."
     systemctl start babylon-node
 }
 
@@ -79,27 +99,26 @@ function yes_no() {
         read -p "Do you wish to continue? (y/N) " yn
         case $yn in
             [Yy]*) break;;
-            [Nn]* ) echo "Aborting"; exit;;
+            [Nn]* ) echo "Aborting."; exit;;
             * ) echo "Aborting."; exit;;
         esac
     done
 }
 
 function download() {
-    echo "Running this script will:
+    echo "This will:
     - Create a directory at $DB_DIR/download if it does not exist.
     - Wipe that directory to start clean.
-    - Download the latest snapshot from snapshots.radix.live to that directory."
+    - Download the latest snapshot from snapshots.radix.live to that directory for date $CURRENT_DATE."
 
     yes_no
     download_snapshot
-
 }
 
 function extract() {
-    echo "Running this script will:
+    echo "This will:
     - Stop your Radix node.
-    - Wipe the ledger database directory as set in your NixOS configuration ($DB_DIR), except for the download directory.
+    - Wipe the ledger database directory at $DB_DIR, except for the download directory.
     - Extract the snapshot to the database directory.
     - Set ownership of the database directory to $USER:$GROUP.
     - Start your Radix node."
@@ -113,10 +132,10 @@ function extract() {
 }
 
 function all() {
-    echo "Running this script will:
+    echo "This will:
     - Stop your Radix node.
-    - Download the latest snapshot from snapshots.radix.live.
-    - Wipe the ledger database directory as set in your NixOS configuration ($DB_DIR), except for the download directory.
+    - Download the snapshot from snapshots.radix.live for date $CURRENT_DATE.
+    - Wipe the ledger database directory at $DB_DIR, except for the download directory.
     - Extract the snapshot to the database directory.
     - Start your Radix node."
 
@@ -131,21 +150,23 @@ function all() {
 }
 
 function help() {
-    echo "Usage: ledger-snapshot [install|download|extract|help] [-y]
+    echo "Usage: ledger-snapshot [-y] [-d DATE] [install|download|extract|help]
+
+Options:
+    -y          Skip confirmation prompts.
+    -d DATE     Use the specified date (YYYY-MM-DD) for snapshot download.
 
 Subcommands:
-    install - Run all steps: download and extract the database, and restart the Radix node.
-    download - Only download the latest snapshot from snapshots.radix.live.
-    extract - Extract the snapshot to the database directory.
-    help - Display this help message.
-Options:
-    -y Skip confirmation prompts.
+    install     Run all steps: download and extract the database, and restart the Radix node.
+    download    Only download the latest snapshot from snapshots.radix.live.
+    extract     Extract the snapshot to the database directory.
+    help        Display this help message.
 
 Each command will list its steps and ask for confirmation before proceeding.
-This script automatically detects and uses the database directory and user/group ownership variables from your NixOS configuration to make the process as seamless as possible.
-"
+This script automatically detects and uses the database directory and user/group ownership variables from your NixOS configuration to make the process as seamless as possible."
 }
 
+# Process subcommand
 case "$1" in
     download)
         download
