@@ -1,5 +1,0 @@
-Host host-b
-    HostName <IP>
-    User <user>
-    Port <port>
-    Anything else...

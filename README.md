@@ -215,56 +215,6 @@ To run a Radix node, you will at least need a keystore file, which contains the 
 
 There are multiple different secret management schemes for Nix: [nix-sops](https://github.com/Mic92/sops-nix), [agenix](https://github.com/ryantm/agenix), and more. But in this example, we will use a built in feature of the Colmena deployment tool which is to simply deploy secrets at a specific file path on the hosts without storing them in the nix store. This way we don't have to manually ssh into the hosts to deploy these files.
 
-#### Deploying with Colmena
-
-Colmena is available in nixpkgs, which means that if you have nix installed, you can easily enter a shell with colmena using:
-```bash
-nix-shell -p colmena
-```
-Now see the example in `examples/ec2-colmena`. The `flake.nix` file is where most colmena-specific configuration is happening:
-```nix
-{
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
-    babylon-node-nix.url = "github:Krulknul/babylon-node-nix/add-example-for-usage-with-the-colmena-deployment-tool";
-  };
-  outputs =
-    { nixpkgs, babylon-node-nix, ... }:
-    {
-      colmena = {
-        meta = {
-          nixpkgs = import nixpkgs {
-            system = "x86_64-linux";
-          };
-        };
-        # Here's one host, but you can add more hosts with different names.
-        # For the SSH credentials, it finds a host with the same name in the SSH config file in this directory.
-        host-b = {
-          # Colmena-specific configuration related to the deployment
-          deployment = {
-            buildOnTarget = true;
-            keys."keystore.ks" = {
-              keyFile = ./keystore.ks;
-              destDir = "/home/babylon-node";
-              user = "babylon-node";
-              group = "babylon-node";
-            };
-          };
-          imports = [
-            babylon-node-nix.nixosModules.babylon-node
-            # using the same system configuration as the EC2 example
-            ../ec2/configuration.nix
-          ];
-        };
-      };
-    };
-}
-```
-If at any point you get stuck, see the [colmena docs](https://colmena.cli.rs/unstable/) for more details.
-This flake defines an output called `colmena`, which includes a `meta` attribute and a `host-b` attribute. The `meta` attribute allows us to set the nixpkgs version that is used by colmena for the deployed hosts. In this example, I'm initializing nixpkgs with a hardcoded platform, but it's possible (and necessary) to override the platform for specific hosts if you have a host that is on a different architecture. The `host-b` attribute defines all the configuration for my specific host. Everything inside the attribute set that is assigned to `host-b` should be seen as a configuration that would normally be in `configuration.nix`. One thing that's different is that there is a special `deployment` option, which is documented in the colmena docs. Through this option, you can set some behaviors for the deployment, like which keys should be copied to the host and how to connect to it. Below that, I import the same configuration as in the regular EC2 example which means I get pretty much the same setup. You could define multiple hosts with some distinct options but share some attributes trough an imported module.
-
-To actually start deploying, we will use the colmena CLI tool. I've written the command in `deploy.sh` for convenience.
-
 
 ## Versioning
 
