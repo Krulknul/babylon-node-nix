@@ -1,5 +1,3 @@
-#!/bin/bash
-
 shopt -s extglob
 
 # Default values
