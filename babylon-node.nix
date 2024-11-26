@@ -38,12 +38,10 @@ stdenv.mkDerivation rec {
   version = "1.2.3";
 
   srcs = [
-
     (fetchurl {
       url = "https://github.com/radixdlt/babylon-node/releases/download/v1.3.0/babylon-node-v1.3.0.zip";
       sha256 = "0h0mj6y23ldmb783m0rq9zzczb3pgslar577jfy7xflpz7cmbxf3";
       name = "babylon_node";
-
     })
     (fetchurl {
       url = binary.url;
