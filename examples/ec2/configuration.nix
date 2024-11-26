@@ -13,9 +13,8 @@
     vim
     htop
     git
+    magic-wormhole # A secure way to transfer files between computers
   ];
-
-  networking.hostName = "babylon-node";
 
   # We need to enable these experimental features
   # for some features of NixOS - like flakes - to work
@@ -36,24 +35,24 @@
     22
   ];
 
-  # Create a "babylon_node" user to run the process as
-  users.users.babylon_node = {
+  # Create a "babylon-node" user to run the process as
+  users.users.babylon-node = {
     isNormalUser = true; # Give the user a home directory to allow node to store some files there
-    group = "babylon_node"; # Add the user to the group
-    home = "/home/babylon_node";
+    group = "babylon-node"; # Add the user to the group
+    home = "/home/babylon-node";
   };
 
   # Add a group corresponding to the user
-  users.groups.babylon_node = { };
+  users.groups.babylon-node = { };
 
-  # Enable the babylon_node service
-  services.babylon_node.enable = true;
+  # Enable the babylon-node service
+  services.babylon-node.enable = true;
 
   # Configure the service.
-  services.babylon_node.config = {
-    db.location = "/home/babylon_node/db";
+  services.babylon-node.config = {
+    db.location = "/home/babylon-node/db";
     node.key = {
-      path = "/home/babylon_node/keystore.ks";
+      path = "/home/babylon-node/keystore.ks";
       create_if_missing = true; # Create a new key if the key file is missing
     };
   };

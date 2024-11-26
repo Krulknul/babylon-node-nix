@@ -20,7 +20,7 @@
     in
     {
       packages = allPackages;
-      nixosModules.babylon_node = import ./babylon-service.nix {
+      nixosModules.babylon-node = import ./babylon-service.nix {
         inherit nixpkgs;
       };
     };
