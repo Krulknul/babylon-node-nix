@@ -5,28 +5,29 @@ let
   lib = pkgs.lib;
   fetchFromGitHub = pkgs.fetchFromGitHub;
   stdenv = pkgs.stdenv;
-  fetchzip = pkgs.fetchzip;
   makeWrapper = pkgs.makeWrapper;
   jdk = pkgs.jdk17;
+  fetchurl = pkgs.fetchurl;
+  unzip = pkgs.unzip;
   systemToBinary = {
     "x86_64-darwin" = {
-      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.2/babylon-node-rust-arch-darwin-x86_64-release-v1.2.2.zip";
-      sha256 = "sha256-uagSpOm9frNOrqn52UfTG7kd3AZ6Rh6gJCT/93chF/g=";
+      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.3.0/babylon-node-rust-arch-darwin-x86_64-release-v1.3.0.zip";
+      sha256 = "0k0fbjgxigazsc5xi2zi7kxc3yfgifa2chp8imwcma5h1mm39azf";
       libraryExtension = "dylib";
     };
     "aarch64-darwin" = {
-      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.2/babylon-node-rust-arch-darwin-aarch64-release-v1.2.2.zip";
-      sha256 = "sha256-obnMoN0YusOlOi4Ri5peP/UaPbfjnmvs80qmbr2wtEI=";
+      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.3.0/babylon-node-rust-arch-darwin-aarch64-release-v1.3.0.zip";
+      sha256 = "0922hvxpqzxxfkqi1isa870vgg4mvbwy5gvsk61x8n764j3bpb0v";
       libraryExtension = "dylib";
     };
     "x86_64-linux" = {
-      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.2/babylon-node-rust-arch-linux-x86_64-release-v1.2.2.zip";
-      sha256 = "sha256-F8QcKjZFpfowMF/weGAXxg90+iT9Kr/YhoSImkZfSiQ=";
+      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.3.0/babylon-node-rust-arch-linux-x86_64-release-v1.3.0.zip";
+      sha256 = "1f5rddgq28xwfhivqj4srmkxasv83iwww2yvnz7mlw2j65db5gy0";
       libraryExtension = "so";
     };
     "aarch64-linux" = {
-      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.2/babylon-node-rust-arch-linux-aarch64-release-v1.2.2.zip";
-      sha256 = "sha256-Qvi6nJrVkr+Nb8oE7g8tcvOFVxLtAuxN5oXcRIzt6Y4=";
+      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.3.0/babylon-node-rust-arch-linux-aarch64-release-v1.3.0.zip";
+      sha256 = "0slb4b0za4fmfnjng75326sdyrbh0vjd1iq1qahzdvjz77xjwz5r";
       libraryExtension = "so";
     };
   };
@@ -37,12 +38,12 @@ stdenv.mkDerivation rec {
   version = "1.2.3";
 
   srcs = [
-    (fetchzip {
-      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.2.3/babylon-node-v1.2.3.zip";
-      sha256 = "sha256-v1JuHu+ty5U2RzNDDri44OSMo1+lkpcv4Upkq5DHk8Q=";
-      name = "babylon-node";
+    (fetchurl {
+      url = "https://github.com/radixdlt/babylon-node/releases/download/v1.3.0/babylon-node-v1.3.0.zip";
+      sha256 = "0h0mj6y23ldmb783m0rq9zzczb3pgslar577jfy7xflpz7cmbxf3";
+      name = "babylon_node";
     })
-    (fetchzip {
+    (fetchurl {
       url = binary.url;
       sha256 = binary.sha256;
       name = "library";
@@ -52,9 +53,23 @@ stdenv.mkDerivation rec {
   buildInputs = [
     jdk
     makeWrapper
+    unzip
   ];
 
-  sourceRoot = "babylon-node";
+
+  unpackPhase = ''
+    array=($srcs)
+    babylon_node=''${array[0]}
+    library=''${array[1]}
+    unzip $babylon_node -d babylon_node
+    mv babylon_node/core-*/** babylon_node
+    rm -rf babylon_node/core-*
+    unzip $library -d library
+    ls -al library
+  '';
+
+  sourceRoot = "babylon_node";
+
 
   installPhase = ''
     mkdir -p $out/jni
